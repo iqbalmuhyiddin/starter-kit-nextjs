@@ -1,3 +1,15 @@
+/**
+ * Authentication Server Actions
+ * 
+ * This file demonstrates the recommended patterns for handling authentication
+ * in a Next.js 15.3 + Supabase application:
+ * 
+ * - Server Actions with 'use server' directive
+ * - Type-safe interfaces for form data
+ * - Proper error handling and user feedback
+ * - Cache revalidation after mutations
+ * - Secure server-side Supabase client usage
+ */
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
@@ -23,7 +35,7 @@ export async function signUp(data: SignUpData) {
     password: data.password,
     options: {
       data: {
-        full_name: data.fullName,
+        full_name: data.fullName, // Stored in user metadata, auto-transferred to profiles table via trigger
       },
     },
   })
@@ -32,7 +44,7 @@ export async function signUp(data: SignUpData) {
     return { error: error.message }
   }
 
-  revalidatePath('/', 'layout')
+  revalidatePath('/', 'layout') // Update auth state across app
   return { success: true }
 }
 
@@ -62,5 +74,5 @@ export async function signOut() {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/') // Automatic redirect after logout
 }

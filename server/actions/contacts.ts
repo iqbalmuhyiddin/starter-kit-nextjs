@@ -1,3 +1,7 @@
+/**
+ * Contact CRUD Operations - Example Server Actions
+ * Demonstrates: RLS security, user validation, type safety
+ */
 'use server'
 
 import { revalidatePath } from 'next/cache'
@@ -16,7 +20,7 @@ export interface ContactData {
 export async function createContact(data: ContactData) {
   const supabase = await createClient()
   
-  // Get the current user - following auth.ts pattern
+  // Always validate user in server actions - RLS handles DB-level security
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
     return { error: 'Unauthorized' }

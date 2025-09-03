@@ -11,7 +11,10 @@ import {
   Shield, 
   Sparkles,
   Terminal,
-  Zap
+  Zap,
+  Github,
+  Users,
+  TrendingUp
 } from "lucide-react";
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
@@ -26,20 +29,20 @@ export default async function Home() {
         <div className="flex justify-center mb-6">
           <Badge variant="secondary" className="px-4 py-1">
             <Sparkles className="w-3 h-3 mr-1" />
-            Next.js 15.3 + Supabase + TypeScript
+            Starter Kit • Next.js 15.3 + Supabase + Docker
           </Badge>
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
-          Build faster with
+          Production-ready
           <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            {" "}modern tools
+            {" "}starter kit
           </span>
         </h1>
         
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          A production-ready starter template with Next.js 15.3, Supabase, TypeScript, 
-          Tailwind CSS v4, and shadcn/ui components.
+          Full-stack starter template with authentication, database, Docker containerization, 
+          and a complete CRM example to demonstrate best practices.
         </p>
         
         <div className="flex gap-4 justify-center">
@@ -68,7 +71,7 @@ export default async function Home() {
 
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Everything you need</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">Everything you need to start building</h2>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card>
@@ -136,9 +139,58 @@ export default async function Home() {
               <div className="w-12 h-12 rounded-lg bg-cyan-100 dark:bg-cyan-900/20 flex items-center justify-center mb-4">
                 <Rocket className="w-6 h-6 text-cyan-600" />
               </div>
-              <CardTitle>Production Ready</CardTitle>
+              <CardTitle>Docker Ready</CardTitle>
               <CardDescription>
-                Testing with Vitest, error handling, and deployment configs
+                Multi-stage builds, docker-compose, and production deployment configs
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      </section>
+
+      {/* Example Features */}
+      <section className="container mx-auto px-4 py-16 bg-muted/50">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">See it in action</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Explore the included CRM example that demonstrates full-stack patterns, 
+            database relationships, and modern React patterns.
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <Card>
+            <CardHeader>
+              <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-blue-600" />
+              </div>
+              <CardTitle>Contact Management</CardTitle>
+              <CardDescription>
+                Full CRUD operations with form validation, server actions, and optimistic updates
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-4">
+                <TrendingUp className="w-6 h-6 text-green-600" />
+              </div>
+              <CardTitle>Sales Pipeline</CardTitle>
+              <CardDescription>
+                Drag-and-drop interface with real-time updates and relationship management
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center mb-4">
+                <Database className="w-6 h-6 text-purple-600" />
+              </div>
+              <CardTitle>Activity Tracking</CardTitle>
+              <CardDescription>
+                Time-series data with proper indexing and efficient queries using Supabase
               </CardDescription>
             </CardHeader>
           </Card>
@@ -172,14 +224,17 @@ export default async function Home() {
 {`# Clone the repository
 git clone https://github.com/your-repo/nextjs-supabase-starter.git
 
-# Install dependencies
-npm install
+# Install dependencies (uses pnpm)
+pnpm install
+
+# Start local Supabase
+supabase start
 
 # Set up environment variables
-cp .env.example .env.local
+cp .env.development.example .env.development
 
 # Start development server
-npm run dev`}
+pnpm run dev`}
                   </pre>
                 </div>
               </CardContent>
@@ -196,21 +251,21 @@ npm run dev`}
                 <div className="bg-zinc-950 rounded-lg p-4 font-mono text-sm text-zinc-50">
                   <div className="flex items-center gap-2 mb-2">
                     <Code2 className="w-4 h-4 text-zinc-400" />
-                    <span className="text-zinc-400">server/queries/posts.ts</span>
+                    <span className="text-zinc-400">server/queries/contacts.ts</span>
                   </div>
                   <pre className="overflow-x-auto">
 {`import { createClient } from '@/lib/supabase/server'
 
-export async function getPosts() {
+export async function getContacts() {
   const supabase = await createClient()
   
   const { data, error } = await supabase
-    .from('posts')
-    .select('*, profiles!inner(username)')
+    .from('contacts')
+    .select('*, deals(title, value)')
     .order('created_at', { ascending: false })
     
   if (error) throw error
-  return data // Fully typed!
+  return data // Fully typed with Supabase types!
 }`}
                   </pre>
                 </div>
@@ -228,19 +283,21 @@ export async function getPosts() {
                 <div className="bg-zinc-950 rounded-lg p-4 font-mono text-sm text-zinc-50">
                   <div className="flex items-center gap-2 mb-2">
                     <Code2 className="w-4 h-4 text-zinc-400" />
-                    <span className="text-zinc-400">app/posts/page.tsx</span>
+                    <span className="text-zinc-400">app/(dashboard)/dashboard/page.tsx</span>
                   </div>
                   <pre className="overflow-x-auto">
-{`export default async function PostsPage() {
-  const posts = await getPosts()
+{`export default async function DashboardPage() {
+  const [contacts, deals] = await Promise.all([
+    getContacts({ limit: 5 }),
+    getDeals({ limit: 5 })
+  ])
   
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Posts</h1>
-      <div className="grid gap-4">
-        {posts.map(post => (
-          <PostCard key={post.id} post={post} />
-        ))}
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+      <div className="grid gap-6">
+        <ContactsOverview contacts={contacts} />
+        <DealsOverview deals={deals} />
       </div>
     </div>
   )

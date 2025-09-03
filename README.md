@@ -1,20 +1,31 @@
-# Next.js 15.3 + Supabase + TypeScript + Docker Starter
+# Next.js 15.3 + Supabase Starter Kit
 
-A modern, production-ready starter template for building full-stack applications with Next.js 15.3, Supabase, TypeScript, Tailwind CSS v4, and Docker deployment.
+A production-ready starter template with authentication, database, Docker containerization, and a complete CRM example demonstrating full-stack patterns and best practices.
 
-## 🚀 Features
+> **🎯 About the CRM Features**: The included contact management, deals pipeline, and activity tracking are example implementations to demonstrate database relationships, CRUD patterns, and component architecture. Use them as learning examples or remove them to build your own features.
 
+## 🚀 What's Included
+
+### Core Stack
 - **Next.js 15.3** with App Router and Server Components
-- **Supabase** for authentication and database (hosted)
-- **TypeScript** with strict mode for type safety
-- **Tailwind CSS v4** for modern styling
-- **shadcn/ui** component library
-- **Docker** - Production-ready containerization with dev/prod modes
-- **Authentication** - Complete auth flow with sign up, sign in, and protected routes
-- **Database Migrations** - Migration-first development with type generation
-- **Vitest** for testing
-- **Zod** for schema validation
-- Pre-configured development tools (ESLint, Prettier)
+- **Supabase** for authentication and database
+- **TypeScript** with strict mode and generated types
+- **Tailwind CSS v4** with shadcn/ui components
+- **Docker** containerization for dev/prod environments
+- **Vitest** testing setup with React Testing Library
+
+### Example Features (CRM Demo)
+- **Contact Management** - Full CRUD with validation
+- **Sales Pipeline** - Drag-and-drop with real-time updates  
+- **Activity Tracking** - Time-series data patterns
+- **Dashboard** - Overview with metrics and quick actions
+
+### Development Tools
+- Authentication flow (signup/signin/signout)
+- Database migrations with type generation
+- Row Level Security (RLS) policies
+- Server Actions for mutations
+- Error boundaries and 404 pages
 
 ## 📋 Prerequisites
 

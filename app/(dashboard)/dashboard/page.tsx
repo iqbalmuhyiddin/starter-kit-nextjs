@@ -6,23 +6,27 @@ import { getContactsCount } from '@/server/queries/contacts'
 import { getDealStages, getDealsCountByStage } from '@/server/queries/deals'
 import { getContacts } from '@/server/queries/contacts'
 import { getActivities } from '@/server/queries/activities'
+import { getTodos, getTodosCount } from '@/server/queries/todos'
 import { ContactDialog } from '@/components/features/crm/contact-dialog'
 import { DealDialog } from '@/components/features/crm/deal-dialog'
 import { ActivityLog } from '@/components/features/crm/activity-log'
-import { PlusIcon, Users, TrendingUp, Activity } from 'lucide-react'
+import { TodoList } from '@/components/features/todos/todo-list'
+import { PlusIcon, Users, TrendingUp, Activity, CheckSquare } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Fetch CRM overview data in parallel
-  const [contactsCount, dealStages, contacts, dealsCountByStage, recentActivities] = await Promise.all([
+  // Fetch dashboard data in parallel
+  const [contactsCount, dealStages, contacts, dealsCountByStage, recentActivities, todosCount, recentTodos] = await Promise.all([
     getContactsCount(),
     getDealStages(),
     getContacts({ limit: 5 }), // Recent contacts
     getDealsCountByStage(),
-    getActivities({ limit: 5 }) // Recent activities
+    getActivities({ limit: 5 }), // Recent activities
+    getTodosCount(),
+    getTodos({ limit: 5 }) // Recent todos
   ])
 
   const totalDeals = dealsCountByStage?.reduce((sum, stage) => sum + stage.count, 0) || 0
@@ -61,7 +65,7 @@ export default async function DashboardPage() {
         <h2 className="text-2xl font-bold mb-4">CRM Overview</h2>
         
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
@@ -107,6 +111,23 @@ export default async function DashboardPage() {
               <div className="text-2xl font-bold">{dealStages?.length || 0}</div>
               <p className="text-xs text-muted-foreground">
                 Active pipeline stages
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Todos
+              </CardTitle>
+              <CheckSquare className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{todosCount}</div>
+              <p className="text-xs text-muted-foreground">
+                <Link href="/dashboard/todos" className="text-blue-600 hover:underline">
+                  View all todos
+                </Link>
               </p>
             </CardContent>
           </Card>
@@ -179,6 +200,19 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <ActivityLog activities={recentActivities || []} />
+          </CardContent>
+        </Card>
+
+        {/* Todos Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Todos</CardTitle>
+            <CardDescription>
+              Your latest todos - simple CRUD example
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <TodoList todos={recentTodos || []} />
           </CardContent>
         </Card>
       </div>

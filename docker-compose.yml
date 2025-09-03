@@ -1,0 +1,19 @@
+services:
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crm-mvp:latest
+    container_name: crm-mvp
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    env_file:
+      - .env.production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

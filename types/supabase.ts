@@ -7,216 +7,37 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
-      activities: {
+      todos: {
         Row: {
-          contact_id: string | null
-          content: string
-          created_at: string
-          deal_id: string | null
-          id: string
-          type: string
-          user_id: string
-        }
-        Insert: {
-          contact_id?: string | null
-          content: string
-          created_at?: string
-          deal_id?: string | null
-          id?: string
-          type?: string
-          user_id: string
-        }
-        Update: {
-          contact_id?: string | null
-          content?: string
-          created_at?: string
-          deal_id?: string | null
-          id?: string
-          type?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "activities_contact_id_fkey"
-            columns: ["contact_id"]
-            isOneToOne: false
-            referencedRelation: "contacts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "activities_deal_id_fkey"
-            columns: ["deal_id"]
-            isOneToOne: false
-            referencedRelation: "deals"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      contacts: {
-        Row: {
-          company: string | null
-          created_at: string
-          email: string | null
-          id: string
-          name: string
-          notes: string | null
-          phone: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          company?: string | null
-          created_at?: string
-          email?: string | null
-          id?: string
-          name: string
-          notes?: string | null
-          phone?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          company?: string | null
-          created_at?: string
-          email?: string | null
-          id?: string
-          name?: string
-          notes?: string | null
-          phone?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      deal_stages: {
-        Row: {
+          completed: boolean
           created_at: string
           id: string
-          name: string
-          order_index: number
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          name: string
-          order_index: number
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          name?: string
-          order_index?: number
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      deals: {
-        Row: {
-          contact_id: string | null
-          created_at: string
-          description: string | null
-          id: string
-          stage_id: string
           title: string
           updated_at: string
           user_id: string
-          value: number | null
         }
         Insert: {
-          contact_id?: string | null
+          completed?: boolean
           created_at?: string
-          description?: string | null
           id?: string
-          stage_id: string
           title: string
           updated_at?: string
-          user_id: string
-          value?: number | null
+          user_id?: string
         }
         Update: {
-          contact_id?: string | null
+          completed?: boolean
           created_at?: string
-          description?: string | null
           id?: string
-          stage_id?: string
           title?: string
           updated_at?: string
           user_id?: string
-          value?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "deals_contact_id_fkey"
-            columns: ["contact_id"]
-            isOneToOne: false
-            referencedRelation: "contacts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "deals_stage_id_fkey"
-            columns: ["stage_id"]
-            isOneToOne: false
-            referencedRelation: "deal_stages"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      profiles: {
-        Row: {
-          avatar_url: string | null
-          created_at: string
-          full_name: string | null
-          id: string
-          updated_at: string
-          username: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          created_at?: string
-          full_name?: string | null
-          id: string
-          updated_at?: string
-          username?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          updated_at?: string
-          username?: string | null
         }
         Relationships: []
       }
@@ -225,10 +46,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      create_default_deal_stages: {
-        Args: { user_id: string }
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
@@ -357,11 +175,7 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },
 } as const
-

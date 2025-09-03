@@ -1,26 +1,33 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  ArrowRight, 
-  Code2, 
-  Database, 
-  Layers, 
-  Rocket, 
-  Shield, 
+import {
+  ArrowRight,
+  Code2,
+  Database,
+  Layers,
+  Rocket,
+  Shield,
   Sparkles,
   Terminal,
   Zap,
-  Users,
-  TrendingUp
 } from "lucide-react";
-import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  // TODO: pindahin
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -31,19 +38,21 @@ export default async function Home() {
             Starter Kit • Next.js 15.3 + Supabase + Docker
           </Badge>
         </div>
-        
+
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
           Production-ready
           <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            {" "}starter kit
+            {" "}
+            starter kit
           </span>
         </h1>
-        
+
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          Full-stack starter template with authentication, database, Docker containerization, 
-          and a simple TODO example to learn essential patterns.
+          Full-stack starter template with authentication, database, Docker
+          containerization, and a simple TODO example to learn essential
+          patterns.
         </p>
-        
+
         <div className="flex gap-4 justify-center">
           {user ? (
             <Link href="/dashboard">
@@ -70,8 +79,10 @@ export default async function Home() {
 
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Everything you need to start building</h2>
-        
+        <h2 className="text-3xl font-bold text-center mb-12">
+          Everything you need to start building
+        </h2>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card>
             <CardHeader>
@@ -80,7 +91,8 @@ export default async function Home() {
               </div>
               <CardTitle>Next.js 15.3</CardTitle>
               <CardDescription>
-                Latest App Router with Server Components, Server Actions, and streaming
+                Latest App Router with Server Components, Server Actions, and
+                streaming
               </CardDescription>
             </CardHeader>
           </Card>
@@ -92,7 +104,8 @@ export default async function Home() {
               </div>
               <CardTitle>Supabase</CardTitle>
               <CardDescription>
-                PostgreSQL database with real-time subscriptions and Row Level Security
+                PostgreSQL database with real-time subscriptions and Row Level
+                Security
               </CardDescription>
             </CardHeader>
           </Card>
@@ -140,7 +153,8 @@ export default async function Home() {
               </div>
               <CardTitle>Docker Ready</CardTitle>
               <CardDescription>
-                Multi-stage builds, docker-compose, and production deployment configs
+                Multi-stage builds, docker-compose, and production deployment
+                configs
               </CardDescription>
             </CardHeader>
           </Card>
@@ -152,11 +166,12 @@ export default async function Home() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Learn with examples</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Start with a simple TODO app that demonstrates essential full-stack patterns: 
-            authentication, database operations, and modern React components.
+            Start with a simple TODO app that demonstrates essential full-stack
+            patterns: authentication, database operations, and modern React
+            components.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           <Card>
             <CardHeader>
@@ -165,7 +180,8 @@ export default async function Home() {
               </div>
               <CardTitle>Authentication System</CardTitle>
               <CardDescription>
-                Complete auth flow with Supabase: signup, signin, protected routes, and user profiles
+                Complete auth flow with Supabase: signup, signin, protected
+                routes, and user profiles
               </CardDescription>
             </CardHeader>
           </Card>
@@ -177,7 +193,8 @@ export default async function Home() {
               </div>
               <CardTitle>Simple CRUD Operations</CardTitle>
               <CardDescription>
-                TODO app demonstrating Create, Read, Update, Delete with Row Level Security
+                TODO app demonstrating Create, Read, Update, Delete with Row
+                Level Security
               </CardDescription>
             </CardHeader>
           </Card>
@@ -187,19 +204,21 @@ export default async function Home() {
       {/* Code Examples */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-12">Quick Start</h2>
-        
+
         <Tabs defaultValue="setup" className="max-w-4xl mx-auto">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="setup">Setup</TabsTrigger>
             <TabsTrigger value="database">Database</TabsTrigger>
             <TabsTrigger value="component">Component</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="setup">
             <Card>
               <CardHeader>
                 <CardTitle>Get up and running</CardTitle>
-                <CardDescription>Clone the repo and install dependencies</CardDescription>
+                <CardDescription>
+                  Clone the repo and install dependencies
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="bg-zinc-950 rounded-lg p-4 font-mono text-sm text-zinc-50">
@@ -208,7 +227,7 @@ export default async function Home() {
                     <span className="text-zinc-400">Terminal</span>
                   </div>
                   <pre className="overflow-x-auto">
-{`# Clone the repository
+                    {`# Clone the repository
 git clone https://github.com/your-repo/nextjs-supabase-starter.git
 
 # Install dependencies (uses pnpm)
@@ -227,21 +246,25 @@ pnpm run dev`}
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="database">
             <Card>
               <CardHeader>
                 <CardTitle>Type-safe database queries</CardTitle>
-                <CardDescription>Generated types from your schema</CardDescription>
+                <CardDescription>
+                  Generated types from your schema
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="bg-zinc-950 rounded-lg p-4 font-mono text-sm text-zinc-50">
                   <div className="flex items-center gap-2 mb-2">
                     <Code2 className="w-4 h-4 text-zinc-400" />
-                    <span className="text-zinc-400">server/queries/todos.ts</span>
+                    <span className="text-zinc-400">
+                      server/queries/todos.ts
+                    </span>
                   </div>
                   <pre className="overflow-x-auto">
-{`import { createClient } from '@/lib/supabase/server'
+                    {`import { createClient } from '@/lib/supabase/server'
 
 export async function getTodos() {
   const supabase = await createClient()
@@ -259,21 +282,25 @@ export async function getTodos() {
               </CardContent>
             </Card>
           </TabsContent>
-          
+
           <TabsContent value="component">
             <Card>
               <CardHeader>
                 <CardTitle>Server Components by default</CardTitle>
-                <CardDescription>Fetch data directly in components</CardDescription>
+                <CardDescription>
+                  Fetch data directly in components
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="bg-zinc-950 rounded-lg p-4 font-mono text-sm text-zinc-50">
                   <div className="flex items-center gap-2 mb-2">
                     <Code2 className="w-4 h-4 text-zinc-400" />
-                    <span className="text-zinc-400">app/(dashboard)/dashboard/page.tsx</span>
+                    <span className="text-zinc-400">
+                      app/(dashboard)/dashboard/page.tsx
+                    </span>
                   </div>
                   <pre className="overflow-x-auto">
-{`export default async function DashboardPage() {
+                    {`export default async function DashboardPage() {
   const [todosCount, todos] = await Promise.all([
     getTodosCount(),
     getTodos({ limit: 5 })
@@ -318,7 +345,11 @@ export async function getTodos() {
                   </Button>
                 </Link>
               )}
-              <Button size="lg" variant="ghost" className="text-white hover:text-white hover:bg-white/20">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="text-white hover:text-white hover:bg-white/20"
+              >
                 Read Documentation
               </Button>
             </div>

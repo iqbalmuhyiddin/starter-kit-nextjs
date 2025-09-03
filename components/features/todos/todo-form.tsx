@@ -1,35 +1,35 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Plus } from 'lucide-react'
-import { createTodo } from '@/server/actions/todos'
-import { toast } from 'sonner'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus } from "lucide-react";
+import { create } from "@/server/actions/todos";
+import { toast } from "sonner";
 
 export function TodoForm() {
-  const [title, setTitle] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (!title.trim()) {
-      toast.error('Please enter a todo')
-      return
+      toast.error("Please enter a todo");
+      return;
     }
 
-    setIsLoading(true)
-    const result = await createTodo({ title })
-    
+    setIsLoading(true);
+    const result = await create({ title });
+
     if (result.error) {
-      toast.error(result.error)
+      toast.error(result.error);
     } else {
-      setTitle('')
-      toast.success('Todo added')
+      setTitle("");
+      toast.success("Todo added");
     }
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2">
@@ -44,5 +44,5 @@ export function TodoForm() {
         <Plus className="w-4 h-4" />
       </Button>
     </form>
-  )
+  );
 }

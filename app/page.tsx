@@ -12,7 +12,6 @@ import {
   Sparkles,
   Terminal,
   Zap,
-  Github,
   Users,
   TrendingUp
 } from "lucide-react";
@@ -42,7 +41,7 @@ export default async function Home() {
         
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
           Full-stack starter template with authentication, database, Docker containerization, 
-          and a complete CRM example to demonstrate best practices.
+          and a simple TODO example to learn essential patterns.
         </p>
         
         <div className="flex gap-4 justify-center">
@@ -151,22 +150,22 @@ export default async function Home() {
       {/* Example Features */}
       <section className="container mx-auto px-4 py-16 bg-muted/50">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">See it in action</h2>
+          <h2 className="text-3xl font-bold mb-4">Learn with examples</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore the included CRM example that demonstrates full-stack patterns, 
-            database relationships, and modern React patterns.
+            Start with a simple TODO app that demonstrates essential full-stack patterns: 
+            authentication, database operations, and modern React components.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           <Card>
             <CardHeader>
               <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-blue-600" />
+                <Shield className="w-6 h-6 text-blue-600" />
               </div>
-              <CardTitle>Contact Management</CardTitle>
+              <CardTitle>Authentication System</CardTitle>
               <CardDescription>
-                Full CRUD operations with form validation, server actions, and optimistic updates
+                Complete auth flow with Supabase: signup, signin, protected routes, and user profiles
               </CardDescription>
             </CardHeader>
           </Card>
@@ -174,23 +173,11 @@ export default async function Home() {
           <Card>
             <CardHeader>
               <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-4">
-                <TrendingUp className="w-6 h-6 text-green-600" />
+                <Database className="w-6 h-6 text-green-600" />
               </div>
-              <CardTitle>Sales Pipeline</CardTitle>
+              <CardTitle>Simple CRUD Operations</CardTitle>
               <CardDescription>
-                Drag-and-drop interface with real-time updates and relationship management
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center mb-4">
-                <Database className="w-6 h-6 text-purple-600" />
-              </div>
-              <CardTitle>Activity Tracking</CardTitle>
-              <CardDescription>
-                Time-series data with proper indexing and efficient queries using Supabase
+                TODO app demonstrating Create, Read, Update, Delete with Row Level Security
               </CardDescription>
             </CardHeader>
           </Card>
@@ -251,17 +238,17 @@ pnpm run dev`}
                 <div className="bg-zinc-950 rounded-lg p-4 font-mono text-sm text-zinc-50">
                   <div className="flex items-center gap-2 mb-2">
                     <Code2 className="w-4 h-4 text-zinc-400" />
-                    <span className="text-zinc-400">server/queries/contacts.ts</span>
+                    <span className="text-zinc-400">server/queries/todos.ts</span>
                   </div>
                   <pre className="overflow-x-auto">
 {`import { createClient } from '@/lib/supabase/server'
 
-export async function getContacts() {
+export async function getTodos() {
   const supabase = await createClient()
   
   const { data, error } = await supabase
-    .from('contacts')
-    .select('*, deals(title, value)')
+    .from('todos')
+    .select('*')
     .order('created_at', { ascending: false })
     
   if (error) throw error
@@ -287,17 +274,16 @@ export async function getContacts() {
                   </div>
                   <pre className="overflow-x-auto">
 {`export default async function DashboardPage() {
-  const [contacts, deals] = await Promise.all([
-    getContacts({ limit: 5 }),
-    getDeals({ limit: 5 })
+  const [todosCount, todos] = await Promise.all([
+    getTodosCount(),
+    getTodos({ limit: 5 })
   ])
   
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
       <div className="grid gap-6">
-        <ContactsOverview contacts={contacts} />
-        <DealsOverview deals={deals} />
+        <TodoOverview todos={todos} count={todosCount} />
       </div>
     </div>
   )
